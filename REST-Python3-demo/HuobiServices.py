@@ -49,8 +49,19 @@ def get_trade(symbol):
     :return:
     """
     params = {'symbol': symbol}
+    url = MARKET_URL + '/market/history/trade'
+    return http_get_request(url, params)
 
-    url = MARKET_URL + '/market/trade'
+# 获取tradedetail
+def get_history_trade(symbol, size = 100):
+    """
+    :param symbol
+    :return:
+    """
+    params = {'symbol': symbol,
+               'size' : size}
+
+    url = MARKET_URL + '/market/history/trade'
     return http_get_request(url, params)
 
 
@@ -67,13 +78,13 @@ def get_ticker(symbol):
 
 
 # 获取 Market Detail 24小时成交量数据
-def get_detail(symbol):
+def get_detail(symbol, size=100):
     """
     :param symbol
     :return:
     """
-    params = {'symbol': symbol}
-
+    params = {'symbol': symbol,
+              'size': size}
     url = MARKET_URL + '/market/detail'
     return http_get_request(url, params)
 
@@ -87,6 +98,12 @@ def get_symbols(long_polling=None):
         params['long-polling'] = long_polling
     path = '/v1/common/symbols'
     return api_key_get(params, path)
+
+def get_timestamp():
+    params = {}
+    path = '/v1/common/timestamp'
+    return api_key_get(params,path)
+
 
 '''
 Trade/Account API
